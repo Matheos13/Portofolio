@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ▼▼ CHANGE the page title to your name ▼▼ -->
+<title>Mathaios Mathaiou — Computer Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0E1117;
+    --surface: #161A22;
+    --surface-2: #1E232E;
+    --line: #2A303C;
+    --text: #E6E8EC;
+    --muted: #8A92A3;
+    --accent: #F2A65A;       /* warm amber accent */
+    --accent-soft: rgba(242, 166, 90, 0.12);
+    --display: "Space Grotesk", system-ui, sans-serif;
+    --body: "Inter", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --maxw: 980px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* subtle blueprint grid in the background */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.18;
+    z-index: 0;
+    pointer-events: none;
+    mask-image: radial-gradient(circle at 50% 0%, black, transparent 70%);
+  }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(10px);
+    background: rgba(14, 17, 23, 0.7);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: var(--mono); font-size: 0.95rem; color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; font-size: 0.9rem; color: var(--muted); }
+  .nav-links a { transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  @media (max-width: 640px) { .nav-links { display: none; } }
+
+  /* ---------- HERO ---------- */
+  header { padding: 120px 0 90px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.85rem; color: var(--accent);
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px;
+  }
+  .eyebrow .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.6rem, 7vw, 4.8rem);
+    line-height: 1.02; font-weight: 700; letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  h1 .accent { color: var(--accent); }
+  .lead { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--muted); max-width: 560px; margin-bottom: 36px; }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--mono); font-size: 0.9rem;
+    padding: 13px 22px; border-radius: 8px; transition: transform 0.15s, background 0.2s, border-color 0.2s;
+    border: 1px solid var(--line);
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--accent); color: #1a1206; border-color: var(--accent); font-weight: 500; }
+  .btn-primary:hover { background: #f6b676; }
+  .btn-ghost { color: var(--text); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- SECTION SHELL ---------- */
+  section { padding: 70px 0; }
+  .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; }
+  .section-num { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); }
+  .section-title { font-family: var(--display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -0.01em; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
+  .about-grid p { color: var(--muted); margin-bottom: 16px; }
+  .about-grid p strong { color: var(--text); font-weight: 500; }
+  .facts { font-family: var(--mono); font-size: 0.88rem; }
+  .fact { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .fact span:first-child { color: var(--muted); }
+  @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; gap: 28px; } }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .skill-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 22px; transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .skill-card h3 { font-family: var(--display); font-size: 1.05rem; margin-bottom: 12px; }
+  .skill-card ul { list-style: none; font-size: 0.9rem; color: var(--muted); }
+  .skill-card li { padding: 3px 0; }
+  .skill-card li::before { content: "▹ "; color: var(--accent); }
+  @media (max-width: 720px) { .skills-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- PROJECTS ---------- */
+  .projects { display: grid; gap: 18px; }
+  .project {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 28px; display: grid; grid-template-columns: auto 1fr; gap: 24px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .project:hover { border-color: var(--accent); background: var(--surface-2); }
+  .project-index { font-family: var(--mono); font-size: 1.4rem; color: var(--accent); opacity: 0.6; }
+  .project h3 { font-family: var(--display); font-size: 1.25rem; margin-bottom: 8px; }
+  .project p { color: var(--muted); font-size: 0.95rem; margin-bottom: 14px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .tag { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 6px; }
+  .project-links { display: flex; gap: 18px; font-family: var(--mono); font-size: 0.85rem; }
+  .project-links a { color: var(--text); border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+  .project-links a:hover { border-color: var(--accent); }
+  @media (max-width: 640px) { .project { grid-template-columns: 1fr; gap: 12px; } }
+
+  /* ---------- CONTACT ---------- */
+  .contact { text-align: center; padding: 90px 0; }
+  .contact h2 { font-family: var(--display); font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 600; margin-bottom: 16px; letter-spacing: -0.01em; }
+  .contact p { color: var(--muted); max-width: 480px; margin: 0 auto 30px; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--mono); font-size: 0.82rem; color: var(--muted); }
+  .footer-inner a:hover { color: var(--accent); }
+  .socials { display: flex; gap: 20px; }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* accessibility */
+  a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .btn:hover, .skill-card:hover, .project:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <nav>
+    <div class="wrap nav-inner">
+      <!-- ▼ your initials or handle ▼ -->
+      <a href="#" class="logo">~/Mathaios-Mathiou</a>
+      <div class="nav-links">
+        <a href="#about">about</a>
+        <a href="#skills">skills</a>
+        <a href="#projects">projects</a>
+        <a href="#contact">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <header>
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> Available for work · 2026</div>
+      <!-- ▼▼ YOUR NAME ▼▼ -->
+      <h1>Mathaios-Mathaiou,<br /><span class="accent">Computer Engineer.</span></h1>
+      <!-- ▼ one-line pitch ▼ -->
+      <p class="lead">I build reliable systems — from low-level firmware to full-stack web apps. Focused on performance, clean architecture, and things that don't break at 3 a.m.</p>
+      <div class="cta-row">
+        <a href="#projects" class="btn btn-primary">View my work</a>
+        <!-- ▼ link your CV / resume PDF ▼ -->
+        <a href="Mathaios_Mathaiou_CV copy.pdf" class="btn btn-ghost">Download CV</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about">
+    <div class="wrap reveal">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2 class="section-title">About</h2>
+      </div>
+      <div class="about-grid">
+        <div>
+          <p>I'm a computer engineer who likes working across the whole stack — comfortable debugging a memory leak in C one day and shipping a React frontend the next.</p>
+          <p>My background is in <strong>embedded systems, networking, and software engineering</strong>. I care about writing code that's tested, documented, and built to last.</p>
+          <p>When I'm not coding, you'll find me reading about distributed systems or tinkering with hardware projects.</p>
+        </div>
+        <div class="facts">
+          <div class="fact"><span>Location</span><span>Your City</span></div>
+          <div class="fact"><span>Focus</span><span>Systems / Web</span></div>
+          <div class="fact"><span>Experience</span><span>3+ years</span></div>
+          <div class="fact"><span>Languages</span><span>EN / ES</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SKILLS ===================== -->
+  <section id="skills">
+    <div class="wrap reveal">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Skills</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h3>Languages</h3>
+          <ul><li>C / C++</li><li>Python</li><li>JavaScript / TypeScript</li><li>Java</li></ul>
+        </div>
+        <div class="skill-card">
+          <h3>Systems</h3>
+          <ul><li>Linux / Bash</li><li>Networking (TCP/IP)</li><li>Docker</li><li>Git</li></ul>
+        </div>
+        <div class="skill-card">
+          <h3>Web & Tools</h3>
+          <ul><li>React / Node.js</li><li>SQL / PostgreSQL</li><li>REST APIs</li><li>CI/CD</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJECTS ===================== -->
+  <section id="projects">
+    <div class="wrap reveal">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Selected Projects</h2>
+      </div>
+      <div class="projects">
+
+        <!-- ▼ duplicate a .project block to add more ▼ -->
+        <article class="project">
+          <div class="project-index">01</div>
+          <div>
+            <h3>Network Traffic Monitor</h3>
+            <p>A real-time packet analyzer that captures and visualizes network traffic, with alerting for anomalous patterns. Built for low overhead on constrained hardware.</p>
+            <div class="tags"><span class="tag">C++</span><span class="tag">libpcap</span><span class="tag">React</span></div>
+            <div class="project-links">
+              <a href="#">GitHub ↗</a>
+              <a href="#">Live demo ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-index">02</div>
+          <div>
+            <h3>Distributed Key-Value Store</h3>
+            <p>A fault-tolerant storage system implementing the Raft consensus algorithm, with automatic leader election and log replication across nodes.</p>
+            <div class="tags"><span class="tag">Go</span><span class="tag">Raft</span><span class="tag">gRPC</span></div>
+            <div class="project-links">
+              <a href="#">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-index">03</div>
+          <div>
+            <h3>Portfolio Website</h3>
+            <p>This site — a fast, responsive single-page portfolio built from scratch with no frameworks, scoring 100 on Lighthouse performance.</p>
+            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+            <div class="project-links">
+              <a href="#">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact" class="contact">
+    <div class="wrap reveal">
+      <h2>Let's build something.</h2>
+      <p>I'm open to new opportunities and collaborations. The fastest way to reach me is email.</p>
+      <!-- ▼ your email ▼ -->
+      <a href="mailto:you@example.com" class="btn btn-primary">you@example.com</a>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© 2026 Mathaios Mathaiou</span>
+      <div class="socials">
+        <!-- ▼ your links ▼ -->
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // scroll reveal — fades sections in as you scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("in"); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  </script>
+
+</body>
+</html>
